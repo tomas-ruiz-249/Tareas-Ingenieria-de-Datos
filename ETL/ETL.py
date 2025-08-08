@@ -15,7 +15,7 @@ def main():
             continue
         departure = row[3]
         arrival = row[4]
-        passenger_count = row[5]
+        passenger_count = int(row[5])
         bus_stop = row[7]
 
         print(total_passenger_count)
@@ -23,7 +23,7 @@ def main():
         arrival = datetime.strptime(arrival, '%H:%M %p')
 
         if(departure <= arrival and arrival < datetime.strptime('12:00 PM', '%H:%M %p')):
-            total_passenger_count[stops[bus_stop]] += 1
+            total_passenger_count[stops[bus_stop]] += passenger_count
 
     max_index = 0
     max = 0
