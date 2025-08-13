@@ -1,4 +1,4 @@
 .*
 ~$*.xlsx
 !.gitignore
-*/venv
+ETL/ETL sqlite/venv/*
