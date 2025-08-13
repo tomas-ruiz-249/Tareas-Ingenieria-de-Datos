@@ -1,0 +1,7 @@
+﻿cliente,fecha,producto,precio_unitario,cantidad,pais
+Juan Pérez,2025-08-01,Laptop,1200,1,Colombia
+Maria Lopez,2025-08-01,Mouse,25,2,Peru
+Carlos Díaz,2025-08-02,Monitor,300,1,Chile
+Ana Torres,2025-08-02,Laptop,,1,Colombia
+Luis García,2025-08-03,Teclado,50,2,Peru
+,2025-08-03,Mouse,20,1,Argentina
