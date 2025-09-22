@@ -1,23 +1,18 @@
 CREATE DATABASE DBMascotas;
+#DROP DATABASE dbmascotas;
+
+USE DBMascotas;
 CREATE TABLE DBMascotas.mascotas (
 	nombre varchar(50) NOT NULL,
     genero char(1) NOT NULL,
     raza varchar(50) NULL,
-    id_mascota int,
+    id_mascota int auto_increment,
     PRIMARY KEY(id_mascota)
 );
 
 CREATE TABLE DBMascotas.mascotas_tipo(
-	tipo varchar(20) NOT NULL,
-	id_mascota int,
-    FOREIGN KEY(id_mascota) REFERENCES DBMascotas.mascotas(id_mascota)
-);
-
-CREATE TABLE DBMascotas.mascotas_compradas(
-	id_mascota int,
-    cedula varchar(10),
-    costo float,
-    FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula),
+	tipo varchar(20) NOT   NULL,
+	id_mascota int NOT NULL,
     FOREIGN KEY(id_mascota) REFERENCES DBMascotas.mascotas(id_mascota)
 );
 
@@ -29,19 +24,27 @@ CREATE TABLE DBMascotas.clientes (
     segundo_apellido varchar(20) NOT NULL,
     PRIMARY KEY(cedula)
 );
+describe dbmascotas.mascotas;
 
 CREATE TABLE DBMascotas.clientes_direccion(
 	direccion varchar(50) NOT NULL,
-    cedula varchar(10),
+    cedula varchar(10) NOT NULL,
     FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula)
 );
 
 CREATE TABLE DBMascotas.clientes_telefonos(
 	telefono varchar(15) NOT NULL,
-    cedula varchar(10),
+    cedula varchar(10) NOT NULL,
     FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula)
 );
-    
+  
+CREATE TABLE DBMascotas.mascotas_compradas(
+	id_mascota int NOT NULL,
+    cedula varchar(10) NOT NULL,
+    costo float NOT NULL,
+    FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula),
+    FOREIGN KEY(id_mascota) REFERENCES DBMascotas.mascotas(id_mascota)
+);
 
 CREATE TABLE DBMascotas.vacunas(
 	nombre varchar(20) NOT NULL,
@@ -82,3 +85,8 @@ CREATE TABLE DBMascotas.ventas_detalle(
     FOREIGN KEY(codigo_barras) REFERENCES DBMascotas.productos(codigo_barras),
     FOREIGN KEY(id_venta) REFERENCES DBMascotas.ventas(id_venta)
 );
+
+describe dbmascotas.mascotas;
+
+insert into dbmascotas.mascotas values("firulais", "M", "salchicha", ""),("snoopy", "M", "beagle", ""),("pepito", "M", "bulldog", ""),("pancho", "M", "pastor aleman", ""),("buñuelo", "M", "chihuahua", "");
+select * from mascotas;
