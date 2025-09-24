@@ -1,20 +1,8 @@
+DROP DATABASE dbmascotas;
 CREATE DATABASE DBMascotas;
-#DROP DATABASE dbmascotas;
+
 
 USE DBMascotas;
-CREATE TABLE DBMascotas.mascotas (
-	nombre varchar(50) NOT NULL,
-    genero char(1) NOT NULL,
-    raza varchar(50) NULL,
-    id_mascota int auto_increment,
-    PRIMARY KEY(id_mascota)
-);
-
-CREATE TABLE DBMascotas.mascotas_tipo(
-	tipo varchar(20) NOT   NULL,
-	id_mascota int NOT NULL,
-    FOREIGN KEY(id_mascota) REFERENCES DBMascotas.mascotas(id_mascota)
-);
 
 CREATE TABLE DBMascotas.clientes (
 	cedula varchar(10),
@@ -22,14 +10,8 @@ CREATE TABLE DBMascotas.clientes (
     segundo_nombre varchar(20) NULL,
     primer_apellido varchar(20) NOT NULL,
     segundo_apellido varchar(20) NOT NULL,
+    direccion varchar(50) NOT NULL,
     PRIMARY KEY(cedula)
-);
-describe dbmascotas.mascotas;
-
-CREATE TABLE DBMascotas.clientes_direccion(
-	direccion varchar(50) NOT NULL,
-    cedula varchar(10) NOT NULL,
-    FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula)
 );
 
 CREATE TABLE DBMascotas.clientes_telefonos(
@@ -37,20 +19,23 @@ CREATE TABLE DBMascotas.clientes_telefonos(
     cedula varchar(10) NOT NULL,
     FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula)
 );
-  
-CREATE TABLE DBMascotas.mascotas_compradas(
-	id_mascota int NOT NULL,
-    cedula varchar(10) NOT NULL,
-    costo float NOT NULL,
-    FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula),
-    FOREIGN KEY(id_mascota) REFERENCES DBMascotas.mascotas(id_mascota)
+
+CREATE TABLE DBMascotas.mascotas (
+	nombre varchar(50) NOT NULL,
+    genero char(1) NOT NULL,
+    raza varchar(50) NULL,
+    tipo varchar(50) NOT NULL,
+    id_mascota int auto_increment,
+    cedula varchar(10),
+    PRIMARY KEY(id_mascota),
+    FOREIGN KEY(cedula) REFERENCES DBMascotas.clientes(cedula)
 );
 
 CREATE TABLE DBMascotas.vacunas(
 	nombre varchar(20) NOT NULL,
     dosis int NOT NULL,
     enfermedad varchar(20) NOT NULL,
-    id_vacuna int NOT NULL,
+    id_vacuna int NOT NULL auto_increment,
     PRIMARY KEY(id_vacuna)
 );
 
@@ -65,7 +50,7 @@ CREATE TABLE DBMascotas.productos(
 	nombre varchar(20) NOT NULL,
     marca varchar(20) NOT NULL,
     precio float NOT NULL,
-    codigo_barras char(100),
+    codigo_barras int auto_increment,
     PRIMARY KEY(codigo_barras)
 );
 
@@ -80,13 +65,15 @@ CREATE TABLE DBMascotas.ventas(
 
 CREATE TABLE DBMascotas.ventas_detalle(
 	cantidad int NOT NULL,
-    codigo_barras char(100) NOT NULL,
+    codigo_barras int NOT NULL,
     id_venta int NOT NULL,
     FOREIGN KEY(codigo_barras) REFERENCES DBMascotas.productos(codigo_barras),
     FOREIGN KEY(id_venta) REFERENCES DBMascotas.ventas(id_venta)
 );
 
-describe dbmascotas.mascotas;
+describe dbmascotas.productos;
 
-insert into dbmascotas.mascotas values("firulais", "M", "salchicha", ""),("snoopy", "M", "beagle", ""),("pepito", "M", "bulldog", ""),("pancho", "M", "pastor aleman", ""),("buñuelo", "M", "chihuahua", "");
-select * from mascotas;
+insert into dbmascotas.clientes values("1021634663", "tomas", "andres", "ruiz", "correa", "calle 17#4-88"),("7438296129", "jaime", "antonio", "gamba", "smith", "calle50 #3"),("4729481067", "juan", "felipe", "poveda", "jimenez", "calle 20#50-3"),("0391463728", "Juan", "jose", "obando", "ruiz", "calle 123 #4"),("7438138947", "angel", "david", "amaya", "montoya", "calle 53#123");
+insert into dbmascotas.mascotas values("firulais", "M", "salchicha", "perro","","1021634663"),("snoopy", "M", "beagle", "perro", "","1021634663"),("pepito", "M", "bulldog", "perro", "","1021634663"),("pancho", "M", "pastor aleman","perro","","1021634663"),("buñuelo", "M", "chihuahua", "perro", "","1021634663");
+insert into dbmascotas.vacunas values("astrazeneca", 3, "coronavirus", ""), ("johnson", 3, "coronavirus", ""), ("poliomielitis", 1, "poliovirus", ""), ("dtp", 4, "tetano", ""), ("mmr", 1, "sarampion", "");
+insert into dbmascotas.productos values("shampoo", "CanAmor", 30500, ""), ("comidaPerro", "pedigree", 60000, ""), ("comidaGato", "whiskas", 35000, ""), ("comidaPez", "nutripez", 10500, ""), ("comidaPerro", "perroski", 25000, "");
