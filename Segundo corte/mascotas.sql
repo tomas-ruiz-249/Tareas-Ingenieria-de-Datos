@@ -77,3 +77,4 @@ insert into dbmascotas.clientes values("1021634663", "tomas", "andres", "ruiz", 
 insert into dbmascotas.mascotas values("firulais", "M", "salchicha", "perro","","1021634663"),("snoopy", "M", "beagle", "perro", "","1021634663"),("pepito", "M", "bulldog", "perro", "","1021634663"),("pancho", "M", "pastor aleman","perro","","1021634663"),("buñuelo", "M", "chihuahua", "perro", "","1021634663");
 insert into dbmascotas.vacunas values("astrazeneca", 3, "coronavirus", ""), ("johnson", 3, "coronavirus", ""), ("poliomielitis", 1, "poliovirus", ""), ("dtp", 4, "tetano", ""), ("mmr", 1, "sarampion", "");
 insert into dbmascotas.productos values("shampoo", "CanAmor", 30500, ""), ("comidaPerro", "pedigree", 60000, ""), ("comidaGato", "whiskas", 35000, ""), ("comidaPez", "nutripez", 10500, ""), ("comidaPerro", "perroski", 25000, "");
+
