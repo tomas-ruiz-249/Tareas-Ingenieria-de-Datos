@@ -1026,4 +1026,17 @@ select nombre, edad from empleados where edad between 30 and 40;
 #5.nuevas contrataciones
 select nombre, fecha_contrato from empleados where year(fecha_contrato) > 2020;
 
-#
+#6.distribucion de empleados
+select departamento, count(*) as num_empleados from empleados group by departamento;
+
+#7.analisis salarial
+select avg(salario) as promedio_salario from empleados;
+
+#8.nombres selectivos
+select nombre from empleados where left(nombre, 1) in ('A', 'C');
+
+#9.Departamentos especificos
+select nombre, departamento from empleados where departamento != "IT";
+
+#10. mejor pagado
+select nombre, max(salario) from empleados;
