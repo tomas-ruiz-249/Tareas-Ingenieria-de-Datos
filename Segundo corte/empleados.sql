@@ -1039,4 +1039,5 @@ select nombre from empleados where left(nombre, 1) in ('A', 'C');
 select nombre, departamento from empleados where departamento != "IT";
 
 #10. mejor pagado
-select nombre, max(salario) from empleados;
+select max(salario), nombres from empleados;
+select * from empleados order by salario;
