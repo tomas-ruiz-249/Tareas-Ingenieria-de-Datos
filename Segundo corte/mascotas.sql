@@ -78,3 +78,21 @@ insert into dbmascotas.mascotas values("firulais", "M", "salchicha", "perro","",
 insert into dbmascotas.vacunas values("astrazeneca", 3, "coronavirus", ""), ("johnson", 3, "coronavirus", ""), ("poliomielitis", 1, "poliovirus", ""), ("dtp", 4, "tetano", ""), ("mmr", 1, "sarampion", "");
 insert into dbmascotas.productos values("shampoo", "CanAmor", 30500, ""), ("comidaPerro", "pedigree", 60000, ""), ("comidaGato", "whiskas", 35000, ""), ("comidaPez", "nutripez", 10500, ""), ("comidaPerro", "perroski", 25000, "");
 
+#cambiar 1 campo en varios registros
+update mascotas set nombre="pepito" where id_mascota in (2,3);
+select * from mascotas;
+#en un registro cambiar varios campos
+update mascotas set raza="bulldog frances", genero='f' where id_mascota = 1;
+
+#begin rollback commit
+
+show variables like "autocommit";
+show processlist;
+select * from information_schema.innoddb_trx;
+
+create view vistaMascotas1 as select m.nombre, m.raza from mascotas m;
+select * from vistaMascotas1;
+
+#nombre cliente y nombre mascota
+create view vistaMascotas as select m.nombre, c.primer_nombre from clientes c inner join mascotas m on c.cedula = m.cedula;
+select * from vistaMascotas;
