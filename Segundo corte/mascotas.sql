@@ -1,7 +1,6 @@
 DROP DATABASE dbmascotas;
 CREATE DATABASE DBMascotas;
 
-
 USE DBMascotas;
 
 CREATE TABLE DBMascotas.clientes (
@@ -78,6 +77,8 @@ insert into dbmascotas.mascotas values("firulais", "M", "salchicha", "perro","",
 insert into dbmascotas.vacunas values("astrazeneca", 3, "coronavirus", ""), ("johnson", 3, "coronavirus", ""), ("poliomielitis", 1, "poliovirus", ""), ("dtp", 4, "tetano", ""), ("mmr", 1, "sarampion", "");
 insert into dbmascotas.productos values("shampoo", "CanAmor", 30500, ""), ("comidaPerro", "pedigree", 60000, ""), ("comidaGato", "whiskas", 35000, ""), ("comidaPez", "nutripez", 10500, ""), ("comidaPerro", "perroski", 25000, "");
 
+
+
 #cambiar 1 campo en varios registros
 update mascotas set nombre="pepito" where id_mascota in (2,3);
 select * from mascotas;
@@ -96,3 +97,54 @@ select * from vistaMascotas1;
 #nombre cliente y nombre mascota
 create view vistaMascotas as select m.nombre, c.primer_nombre from clientes c inner join mascotas m on c.cedula = m.cedula;
 select * from vistaMascotas;
+
+DELIMITER $$
+create procedure MascotasPorCliente(in cedula_cliente varchar(10))
+begin
+	select nombre, cedula from mascotas where cedula = cedula_cliente;
+end $$
+DELIMITER ;
+call MascotasPorCliente("1021634663");
+
+DELIMITER $$
+create procedure ConsultarRegistrarMascota(
+in nombre_mascota varchar(50),
+in genero_mascota char(1),
+in raza_mascota varchar(50),
+in tipo_mascota varchar(50),
+in id_mascota int,
+in cedula_mascota varchar(10)
+)
+begin
+	declare v_nombre varchar(50);
+    select nombre into v_nombre from mascotas where nombre_mascota = nombre limit 1;
+    if v_nombre is null then
+		insert into mascotas (id_mascota, nombre, genero, raza, tipo, cedula) values("", nombre_mascota, genero_mascota, raza_mascota, tipo_mascota, cedula_mascota);
+	else
+		select concat("la mascota ", nombre_mascota, "ya esta registrada") as mensaje;
+        select * from mascotas where nombre_mascota = nombre;
+    end if;
+end$$
+DELIMITER ;
+call ConsultarRegistrarMascota("pepito perez", "M", "xxx", "dddd", "","1021634663");
+
+select * from mascotas;
+
+drop procedure ConsultarVacunas;
+DELIMITER $$
+create procedure ConsultarVacunas(
+in id_masc int,
+in id_vac int
+)
+begin
+	select m.nombre, v.nombre
+    from vacunas_aplicadas a
+    inner join mascotas m on m.id_mascota = a.id_mascota
+    inner join vacunas v on v.id_vacuna =  a.id_vacuna
+    where a.id_mascota = id_masc and a.id_vacuna = id_vac;
+end$$
+DELIMITER ;
+
+call ConsultarVacunas(1,1);
+#insert into vacunas_aplicadas (id_mascota, id_vacuna) values(1,1), (1,2), (2,1);
+select * from vacunas_aplicadas;
