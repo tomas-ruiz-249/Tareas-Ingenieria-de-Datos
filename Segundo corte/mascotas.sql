@@ -1,4 +1,4 @@
-DROP DATABASE dbmascotas;
+DROP DATABASE DBMascotas;
 CREATE DATABASE DBMascotas;
 
 USE DBMascotas;
@@ -69,13 +69,11 @@ CREATE TABLE DBMascotas.ventas_detalle(
     FOREIGN KEY(codigo_barras) REFERENCES DBMascotas.productos(codigo_barras),
     FOREIGN KEY(id_venta) REFERENCES DBMascotas.ventas(id_venta)
 );
-
-describe dbmascotas.productos;
-
-insert into dbmascotas.clientes values("1021634663", "tomas", "andres", "ruiz", "correa", "calle 17#4-88"),("7438296129", "jaime", "antonio", "gamba", "smith", "calle50 #3"),("4729481067", "juan", "felipe", "poveda", "jimenez", "calle 20#50-3"),("0391463728", "Juan", "jose", "obando", "ruiz", "calle 123 #4"),("7438138947", "angel", "david", "amaya", "montoya", "calle 53#123");
-insert into dbmascotas.mascotas values("firulais", "M", "salchicha", "perro","","1021634663"),("snoopy", "M", "beagle", "perro", "","1021634663"),("pepito", "M", "bulldog", "perro", "","1021634663"),("pancho", "M", "pastor aleman","perro","","1021634663"),("buñuelo", "M", "chihuahua", "perro", "","1021634663");
-insert into dbmascotas.vacunas values("astrazeneca", 3, "coronavirus", ""), ("johnson", 3, "coronavirus", ""), ("poliomielitis", 1, "poliovirus", ""), ("dtp", 4, "tetano", ""), ("mmr", 1, "sarampion", "");
-insert into dbmascotas.productos values("shampoo", "CanAmor", 30500, ""), ("comidaPerro", "pedigree", 60000, ""), ("comidaGato", "whiskas", 35000, ""), ("comidaPez", "nutripez", 10500, ""), ("comidaPerro", "perroski", 25000, "");
+describe vacunas;
+insert into clientes values("1021634663", "tomas", "andres", "ruiz", "correa", "calle 17#4-88"),("7438296129", "jaime", "antonio", "gamba", "smith", "calle50 #3"),("4729481067", "juan", "felipe", "poveda", "jimenez", "calle 20#50-3"),("0391463728", "Juan", "jose", "obando", "ruiz", "calle 123 #4"),("7438138947", "angel", "david", "amaya", "montoya", "calle 53#123");
+insert into mascotas (nombre, genero, raza, tipo, cedula) values("firulais", "M", "salchicha", "perro","1021634663"),("snoopy", "M", "beagle", "perro", "1021634663"),("pepito", "M", "bulldog", "perro", "1021634663"),("pancho", "M", "pastor aleman","perro","1021634663"),("buñuelo", "M", "chihuahua", "perro", "1021634663");
+insert into vacunas (nombre, dosis, enfermedad) values("astrazeneca", 3, "coronavirus"), ("johnson", 3, "coronavirus"), ("poliomielitis", 1, "poliovirus"), ("dtp", 4, "tetano"), ("mmr", 1, "sarampion");
+insert into productos (nombre, marca, precio) values("shampoo", "CanAmor", 30500), ("comidaPerro", "pedigree", 60000), ("comidaGato", "whiskas", 35000), ("comidaPez", "nutripez", 10500), ("comidaPerro", "perroski", 25000);
 
 
 
@@ -87,9 +85,9 @@ update mascotas set raza="bulldog frances", genero='f' where id_mascota = 1;
 
 #begin rollback commit
 
-show variables like "autocommit";
-show processlist;
-select * from information_schema.innoddb_trx;
+#show variables like "autocommit";
+#show processlist;
+#select * from information_schema.innoddb_trx;
 
 create view vistaMascotas1 as select m.nombre, m.raza from mascotas m;
 select * from vistaMascotas1;
@@ -126,9 +124,9 @@ begin
     end if;
 end$$
 DELIMITER ;
-call ConsultarRegistrarMascota("pepito perez", "M", "xxx", "dddd", "","1021634663");
+#call ConsultarRegistrarMascota("pepito perez", "M", "xxx", "dddd", "","1021634663");
 
-select * from mascotas;
+#select * from mascotas;
 
 drop procedure ConsultarVacunas;
 DELIMITER $$
@@ -145,6 +143,6 @@ begin
 end$$
 DELIMITER ;
 
-call ConsultarVacunas(1,1);
+#call ConsultarVacunas(1,1);
 #insert into vacunas_aplicadas (id_mascota, id_vacuna) values(1,1), (1,2), (2,1);
-select * from vacunas_aplicadas;
+#select * from vacunas_aplicadas;
