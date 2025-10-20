@@ -122,4 +122,4 @@ BEGIN
     SELECT "Proyecto Insertado" as Mensaje;
 END$$
 DELIMITER ;
-CALL Proyecto4Trans("xxxx","");
+CALL Proyecto4Trans("xxxx","2024/09/24", 100.00, 3);
