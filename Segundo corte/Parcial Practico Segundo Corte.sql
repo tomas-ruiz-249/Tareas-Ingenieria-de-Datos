@@ -90,28 +90,36 @@ BEGIN
     RETURN v_proyecto;
 END $$
 DELIMITER ;
+SELECT ProyectosDepartamento(3);
 
 # Procedimiento: listar departamentos con proyectos límite
 DELIMITER $$
 CREATE PROCEDURE ProyectosLimite()
 BEGIN
-	SELECT * FROM Proyecto WHERE id_departamento = NEW.id_departamento AND CURDATE() >= fecha_inicio;
+	SELECT * FROM Proyecto WHERE CURDATE() >= fecha_inicio;
 END $$
 DELIMITER ;
-
+CALL ProyectosLimite();
 
 #Transacción: si se inserta un 4.º proyecto → ROLLBACK.
 DELIMITER $$
-CREATE PROCEDURE 4toProyecto(
-	IN id_dep INT
+CREATE PROCEDURE Proyecto4Trans(
+    IN nom_proy VARCHAR(100),
+    IN fecha DATE,
+    IN pres DECIMAL(10,2),
+    IN id_dep INT
 )
 BEGIN
-	INSERT INTO Proyecto (nombre, fecha_inicio, presupuesto, id_departamento) VALUES ("xxxxxx", "2025/10/20", 600500.30, id_dep);
-	SELECT COUNT(*) INTO @num_proyectos FROM Proyecto WHERE id_departamento = @id_insertar AND CURDATE() >= fecha_inicio;
-	IF @num_proyectos >= 3 THEN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
 		ROLLBACK;
-	ELSE
-		COMMIT;
-	END IF;
+		SELECT "No se puede insertar un 4to proyecto en el departamento especificado" as Mensaje;
+    END;
+    
+    START TRANSACTION;
+	INSERT INTO Proyecto (nombre, fecha_inicio, presupuesto, id_departamento) VALUES (nom_proy, fecha, pres, id_dep);
+    COMMIT;
+    SELECT "Proyecto Insertado" as Mensaje;
 END$$
 DELIMITER ;
+CALL Proyecto4Trans("xxxx","");
