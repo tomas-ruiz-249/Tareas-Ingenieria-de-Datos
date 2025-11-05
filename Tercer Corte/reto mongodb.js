@@ -79,10 +79,9 @@ db.bands.aggregate([
     {$limit: 2}
 ])
 
-//RETO 4
+//RETO 4 rating promedio por 
 db.bands.aggregate([
-    { $unwind: "$albums" },
-    { $project: { "name": 1, "albumName": "$albums.name", "rating": "$albums.rating" } },
-    { $sort: { "rating": -1 } },
-    {$limit: 2}
+    {$unwind : "$albums"},
+    {$project : {"country" : 1, "rating" : "$albums.rating"}},
+    {$group : {"_id" : "$country", "avgRating" : {$avg : "$rating"}}}
 ])
