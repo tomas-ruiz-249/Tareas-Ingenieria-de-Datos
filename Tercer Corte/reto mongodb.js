@@ -64,14 +64,14 @@ db.bands.insertMany([
   }
 ])
 
-//RETO 2
+//RETO 2 albumes por banda
 db.bands.aggregate([
     {$project : 
         {"name" : 1, "numAlbums" : {$size : "$albums"}}
     }
 ])
 
-//RETO 3
+//RETO 3 top 2 ventas
 db.bands.aggregate([
     { $unwind: "$albums" },
     { $project: { "name": 1, "albumName": "$albums.name", "sales": "$albums.sales" } },
@@ -79,7 +79,7 @@ db.bands.aggregate([
     {$limit: 2}
 ])
 
-//RETO 4 rating promedio por 
+//RETO 4 rating promedio por pais
 db.bands.aggregate([
     {$unwind : "$albums"},
     {$project : {"country" : 1, "rating" : "$albums.rating"}},
