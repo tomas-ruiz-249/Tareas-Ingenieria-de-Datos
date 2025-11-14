@@ -12,9 +12,11 @@ const {
  obtenerEstadisticas,
  obtenerPorPrioridad
 } = require('../controllers/tareaController');
+
 // Rutas especiales (deben ir ANTES de las rutas con :id)
 router.get('/tareas/stats', obtenerEstadisticas);
 router.get('/tareas/prioridad/:prioridad', obtenerPorPrioridad);
+
 // Rutas CRUD principales
 router.route('/tareas')
  .get(obtenerTareas)

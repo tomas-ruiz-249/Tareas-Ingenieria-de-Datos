@@ -169,6 +169,7 @@ exports.eliminarTarea = async (req, res) => {
    });
  }
 };
+
 // @desc    Completar tarea
 // @route   PATCH /api/tareas/:id/completar
 // @access  Public
@@ -227,6 +228,7 @@ exports.reabrirTarea = async (req, res) => {
 exports.obtenerEstadisticas = async (req, res) => {
  try {
    const estadisticas = await Tarea.obtenerEstadisticas();
+   console.log(estadisticas);
    res.status(200).json({
      success: true,
      data: estadisticas
